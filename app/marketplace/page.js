@@ -63,7 +63,7 @@ export default function Marketplace() {
   }, [isConnected]); // Added signer and getNFTitems as dependencies
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-r from-cyan-400 to-purple-500">
+    <div className="flex flex-col h-screen bg-gradient-to-r from-cyan-400 to-purple-500">
       <div className="flex flex-col items-center flex-grow">
         <div className="max-w-6xl w-full mx-auto p-4 flex-grow py-5">
           {isConnected ? (
