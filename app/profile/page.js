@@ -90,7 +90,7 @@ export default function Profile() {
                     ))}
                   </div>
                 ) : (
-                  <div className={styles.noNFT}>You don't have any NFT...</div>
+                  <div className={styles.noNFT}>You don&apos;t have any NFT...</div>
                 )}
               </div>
             </>

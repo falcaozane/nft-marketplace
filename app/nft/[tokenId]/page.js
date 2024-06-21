@@ -57,7 +57,7 @@ export default function NFTPage() {
     }
 
     fetchData();
-  }, [isConnected]);
+  }, [isConnected, signer]);
 
   async function buyNFT() {
     try {

@@ -11,7 +11,7 @@ export default function HomePage() {
           </h1>
           <p className="text-2xl leading-relaxed mb-12 text-white">
             Enter the nexus of creativity and innovation at NFTstore. Uncover a
-            realm of digital marvels, and together, let's redefine the future of
+            realm of digital marvels, and together, let&apos;s redefine the future of
             collectibles.
           </p>
           <div className="flex items-center gap-8">
