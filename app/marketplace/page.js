@@ -60,7 +60,7 @@ export default function Marketplace() {
     };
 
     fetchData();
-  }, [isConnected]);
+  }, [isConnected, signer]); // Added signer and getNFTitems as dependencies
 
   return (
     <div className="flex flex-col h-full bg-gradient-to-r from-cyan-400 to-purple-500">
