@@ -23,7 +23,7 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
-        <Image src="/pic1.png" alt="NFTs" width={1075} height={650} />
+        {/* <Image src="/pic1.png" alt="NFTs" width={1075} height={650} /> */}
       </div>
     </div>
   );
