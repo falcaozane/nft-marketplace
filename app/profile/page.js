@@ -3,13 +3,11 @@ import { WalletContext } from "@/context/wallet";
 import { useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import MarketplaceJson from "@/app/marketplace.json";
-import styles from "./profile.module.css";
-
 import axios from "axios";
 import NFTTile from "@/components/nftCard/NFTCard";
 
 export default function Profile() {
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState("0");
   const { isConnected, userAddress, signer } = useContext(WalletContext);
 
@@ -62,40 +60,44 @@ export default function Profile() {
   }, [isConnected]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.innerContainer}>
-        <div className={styles.content}>
+    <div className="flex flex-col h-full bg-gradient-to-r from-cyan-400 to-purple-500">
+      <div className="flex flex-col items-center justify-center flex-grow">
+        <div className="max-w-7xl w-full mx-auto p-4 flex-grow overflow-y-auto">
           {isConnected ? (
             <>
-              <div className={styles.userInfo}>
-                <span className={styles.label}>Wallet Address:</span>
-                <span className={styles.address}>{userAddress}</span>
+              <div className="my-5 text-center">
+                <span className="block text-2xl font-bold text-white">Wallet Address: </span>
+                <span className="text-wrap text-sm md:text-xl font-bold text-white">{userAddress}</span>
               </div>
-              <div className={styles.stats}>
-                <div className={styles.stat}>
-                  <span className={styles.label}>Number of NFTs:</span>
-                  <span className={styles.value}>{items?.length}</span>
+              <div className="flex justify-between my-5">
+                <div>
+                  <span className="block text-xl font-bold text-white">Number of NFTs:</span>
+                  <span className="block text-xl font-bold text-white">{items?.length}</span>
                 </div>
-                <div className={styles.stat}>
-                  <span className={styles.label}>Total Value:</span>
-                  <span className={styles.value}>{totalPrice} ETH</span>
+                <div>
+                  <span className="block text-xl font-bold text-white">Total Value:</span>
+                  <span className="block text-xl font-bold text-white">{totalPrice} ETH</span>
                 </div>
               </div>
-              <div className={styles.nftSection}>
-                <h2 className={styles.heading}>Your NFTs</h2>
+              <div className="mt-10">
+                <h2 className="text-4xl text-center text-white mb-7 uppercase">Your NFTs</h2>
                 {items?.length > 0 ? (
-                  <div className={styles.nftGrid}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {items?.map((value, index) => (
                       <NFTTile item={value} key={index} />
                     ))}
                   </div>
                 ) : (
-                  <div className={styles.noNFT}>You don&apos;t have any NFT...</div>
+                  <div className="text-2xl font-bold text-red-500 text-center my-4">
+                    You don&apos;t have any NFT...
+                  </div>
                 )}
               </div>
             </>
           ) : (
-            <div className={styles.notConnected}>You are not connected...</div>
+            <div className="text-3xl font-bold text-red-500 text-center my-4 py-10 h-screen">
+              You are not connected...
+            </div>
           )}
         </div>
       </div>

@@ -87,14 +87,14 @@ export default function Marketplace() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-2xl font-bold text-gray-300 text-center my-4">
+                  <div className="text-2xl font-bold text-gray-300 text-center my-4 h-screen">
                     No NFT Listed Now...
                   </div>
                 )}
               </div>
             </>
           ) : (
-            <div className="text-3xl font-bold text-red-500 text-center my-4">
+            <div className="text-3xl font-bold text-red-500 text-center my-4 h-screen">
               You are not connected...
             </div>
           )}
