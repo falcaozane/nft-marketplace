@@ -72,13 +72,13 @@ export default function Marketplace() {
         <div className="max-w-6xl w-full mx-auto p-4 flex-grow py-5">
           {isConnected ? (
             <>
-              <div className="my-5">
+              <div className="my-5 ">
                 <h2 className="text-4xl text-center text-white mb-7 uppercase">
                   NFT Marketplace
                 </h2>
                 {loading ? (
-                  <div className="flex justify-center items-center h-64">
-                    <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-white"></div>
+                  <div className="flex justify-center items-center h-screen">
+                    <div className="w-32 h-32 border-8 border-dashed rounded-full animate-spin border-white"></div>
                   </div>
                 ) : items.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
