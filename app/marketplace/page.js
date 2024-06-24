@@ -8,6 +8,7 @@ import NFTCard from "@/components/nftCard/NFTCard";
 
 export default function Marketplace() {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { isConnected, signer } = useContext(WalletContext);
 
   async function getNFTitems() {
@@ -50,17 +51,20 @@ export default function Marketplace() {
   useEffect(() => {
     const fetchData = async () => {
       if (isConnected) {
+        setLoading(true);
         try {
           const itemsArray = await getNFTitems();
           setItems(itemsArray);
         } catch (error) {
           console.error("Error fetching NFT items:", error);
+        } finally {
+          setLoading(false);
         }
       }
     };
 
     fetchData();
-  }, [isConnected]); // Added signer and getNFTitems as dependencies
+  }, [isConnected, signer]); // Added signer and getNFTitems as dependencies
 
   return (
     <div className="flex flex-col h-full bg-gradient-to-r from-cyan-400 to-purple-500">
@@ -72,7 +76,11 @@ export default function Marketplace() {
                 <h2 className="text-4xl text-center text-white mb-7 uppercase">
                   NFT Marketplace
                 </h2>
-                {items.length > 0 ? (
+                {loading ? (
+                  <div className="flex justify-center items-center h-64">
+                    <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-white"></div>
+                  </div>
+                ) : items.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {items.map((value, index) => (
                       <NFTCard item={value} key={index} />
