@@ -85,32 +85,32 @@ export default function NFTPage() {
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-r from-cyan-400 to-purple-500">
-      <div className="flex flex-col items-center justify-center flex-grow p-4">
+      <div className="flex flex-col items-center justify-center flex-grow">
         {isConnected ? (
-          <div className={styles.content}>
-            <div className={styles.nftGrid}>
+          <div className="bg-gray-100 max-w-6xl w-full mx-auto shadow-lg rounded-lg p-4 overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <Image src={item?.image} alt="" width={800} height={520} />
-              <div className={styles.details}>
-                <div className={styles.stats}>
-                  <div className={styles.stat}>
-                    <span className={styles.label}>Name:</span>
-                    <span className={styles.value}>{item?.name}</span>
+              <div className="flex flex-col items-center justify-between p-4">
+                <div className="space-y-4">
+                  <div className="text-xl font-bold text-orange-600">
+                    <span className="">Name:</span>
+                    <span className="">{item?.name}</span>
                   </div>
-                  <div className={styles.stat}>
-                    <span className={styles.label}>Description:</span>
-                    <span className={styles.value}>{item?.description}</span>
+                  <div className="text-xl text-gray-700">
+                    <span className="">Description:</span>
+                    <span className="">{item?.description}</span>
                   </div>
-                  <div className={styles.stat}>
-                    <span className={styles.label}>Price:</span>
-                    <span className={styles.value}>{item?.price} ETH</span>
+                  <div className="text-xl font-bold text-orange-600">
+                    <span className="">Price:</span>
+                    <span className="">{item?.price} ETH</span>
                   </div>
-                  <div className={styles.stat}>
-                    <span className={styles.label}>Seller:</span>
-                    <span className={styles.value}>{item?.seller}</span>
+                  <div className="text-xl font-bold text-orange-600">
+                    <span className="">Seller:</span>
+                    <span className="">{item?.seller}</span>
                   </div>
                 </div>
-                <div className={styles.ctaBtn}>
-                  <div className={styles.msg}>{msg}</div>
+                <div className="mt-4 text-center">
+                  <div className="text-red-600 text-lg">{msg}</div>
                   {userAddress.toLowerCase() === item?.seller.toLowerCase() ? (
                     <div className={styles.msgAlert}>You already Own!</div>
                   ) : (
