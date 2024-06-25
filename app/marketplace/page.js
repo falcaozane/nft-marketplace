@@ -24,22 +24,24 @@ export default function Marketplace() {
       let transaction = await contract.getAllListedNFTs();
 
       for (const i of transaction) {
-        const tokenId = parseInt(i.tokenId);
-        const tokenURI = await contract.tokenURI(tokenId);
-        const meta = (await axios.get(tokenURI)).data;
-        const price = ethers.formatEther(i.price);
+        if (i.isListed) { // Only include items that are listed
+          const tokenId = parseInt(i.tokenId);
+          const tokenURI = await contract.tokenURI(tokenId);
+          const meta = (await axios.get(tokenURI)).data;
+          const price = ethers.formatEther(i.price);
 
-        const item = {
-          price,
-          tokenId,
-          seller: i.seller,
-          owner: i.owner,
-          image: meta.image,
-          name: meta.name,
-          description: meta.description,
-        };
+          const item = {
+            price,
+            tokenId,
+            seller: i.seller,
+            owner: i.owner,
+            image: meta.image,
+            name: meta.name,
+            description: meta.description,
+          };
 
-        itemsArray.push(item);
+          itemsArray.push(item);
+        }
       }
     } catch (error) {
       console.error("Error fetching NFT items:", error);
@@ -67,7 +69,7 @@ export default function Marketplace() {
   }, [isConnected, signer]); // Added signer and getNFTitems as dependencies
 
   return (
-    <div className="flex flex-col h-screen   bg-slate-400">
+    <div className="flex flex-col h-screen bg-slate-400">
       <div className="flex flex-col items-center flex-grow">
         <div className="max-w-6xl w-full mx-auto p-4 flex-grow py-5">
           {isConnected ? (
