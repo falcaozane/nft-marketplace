@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function NFTCard({ item }) {
-  const IPFSUrl = GetIpfsUrlFromPinata(item.image);
+  const IPFSUrls = GetIpfsUrlFromPinata(item.image);
+  const IPFSUrl = IPFSUrls[0]; // Select the first gateway URL
 
   const limitedDescription =
     item.description.length > 100
