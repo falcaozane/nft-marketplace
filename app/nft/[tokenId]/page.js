@@ -7,6 +7,8 @@ import { ethers } from "ethers";
 import axios from "axios";
 import GetIpfsUrlFromPinata from "@/utils/index";
 import Image from "next/image";
+import styles from "./nft.module.css";
+
 
 export default function NFTPage() {
   const params = useParams();
@@ -82,50 +84,44 @@ export default function NFTPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-slate-200">
+    <div className="flex flex-col h-screen bg-gradient-to-r from-cyan-400 to-purple-500">
       <div className="flex flex-col items-center justify-center flex-grow p-4">
         {isConnected ? (
-          <div className="bg-white max-w-6xl w-full mx-auto shadow-lg rounded-lg overflow-hidden">
-            <div className="flex flex-col md:flex-row">
-              <Image
-                src={item?.image}
-                alt={item?.name}
-                width={800}
-                height={520}
-                className="w-full h-auto md:w-1/2 rounded-lg"
-                loading="lazy"
-              />
-              <div className="flex flex-col px-2 py-4 md:p-6">
-                <div className="space-y-4 px-2">
-                  <div className="md:text-2xl font-bold text-orange-600">
-                    <span className="flex">Name: <p className="text-orange-800 mx-2"> {item?.name} </p></span>
+          <div className={styles.content}>
+            <div className={styles.nftGrid}>
+              <Image src={item?.image} alt="" width={800} height={520} />
+              <div className={styles.details}>
+                <div className={styles.stats}>
+                  <div className={styles.stat}>
+                    <span className={styles.label}>Name:</span>
+                    <span className={styles.value}>{item?.name}</span>
                   </div>
-                  <div className="md:text-xl text-gray-700">
-                    <span className="block font-bold text-orange-600">Description:</span>
-                    <span className="block">{item?.description}</span>
+                  <div className={styles.stat}>
+                    <span className={styles.label}>Description:</span>
+                    <span className={styles.value}>{item?.description}</span>
                   </div>
-                  <div className="md:text-xl font-bold text-orange-600">
-                    <span className="block">Price: {item?.price} ETH</span>
-                    <span className="block"></span>
+                  <div className={styles.stat}>
+                    <span className={styles.label}>Price:</span>
+                    <span className={styles.value}>{item?.price} ETH</span>
                   </div>
-                  <div className="md:text-xl font-bold text-orange-600">
-                    <span className="block">Seller:</span>
-                    <p className="text-wrap text-xs md:text-lg">{item?.seller}</p>
+                  <div className={styles.stat}>
+                    <span className={styles.label}>Seller:</span>
+                    <span className={styles.value}>{item?.seller}</span>
                   </div>
                 </div>
-                <div className="mt-4 text-center">
-                  <div className="text-red-600 text-lg">{msg}</div>
-                  {userAddress?.toLowerCase() === item?.seller?.toLowerCase() ? (
-                    <div className="text-green-600 text-2xl font-semibold">
-                      You already Own!
-                    </div>
+                <div className={styles.ctaBtn}>
+                  <div className={styles.msg}>{msg}</div>
+                  {userAddress.toLowerCase() === item?.seller.toLowerCase() ? (
+                    <div className={styles.msgAlert}>You already Own!</div>
                   ) : (
                     <button
-                      onClick={buyNFT}
-                      className="flex items-center justify-center my-4 mx-2 p-3 text-white bg-red-500 rounded-md font-bold text-lg transition-all duration-300 hover:bg-red-600"
+                      onClick={() => {
+                        buyNFT();
+                      }}
+                      className={styles.Btn}
                     >
                       {btnContent === "Processing..." && (
-                        <span className="inline-block w-6 h-6 mr-2 border-4 border-gray-300 border-t-white rounded-full animate-spin"></span>
+                        <span className={styles.spinner} />
                       )}
                       {btnContent}
                     </button>
@@ -135,9 +131,7 @@ export default function NFTPage() {
             </div>
           </div>
         ) : (
-          <div className="text-4xl font-bold text-red-500 text-center my-4">
-            You are not connected...
-          </div>
+          <div className={styles.notConnected}>You are not connected...</div>
         )}
       </div>
     </div>
