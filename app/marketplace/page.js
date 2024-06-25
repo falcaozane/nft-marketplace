@@ -87,7 +87,7 @@ export default function Marketplace() {
   }, [signer]);
 
   return (
-    <div className="flex flex-col h-full bg-slate-400">
+    <div className="flex flex-col h-screen bg-slate-400">
       <div className="flex flex-col items-center flex-grow">
         <div className="max-w-6xl w-full mx-auto p-4 flex-grow py-5">
           {isConnected ? (
