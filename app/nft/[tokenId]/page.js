@@ -82,7 +82,7 @@ export default function NFTPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-r from-cyan-400 to-purple-500">
+    <div className="flex flex-col h-screen bg-slate-200">
       <div className="flex flex-col items-center justify-center flex-grow p-4">
         {isConnected ? (
           <div className="bg-white max-w-6xl w-full mx-auto shadow-lg rounded-lg overflow-hidden">

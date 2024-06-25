@@ -91,7 +91,7 @@ export default function SellNFT() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-r from-cyan-400 to-purple-500">
+    <div className="flex flex-col min-h-screen bg-slate-400">
       {isConnected ? (
         <div className="flex flex-col items-center justify-center flex-grow mx-2">
           <div className="bg-gray-200 w-full max-w-lg p-5 shadow-lg rounded-lg my-3 md:my-5 mx-2">

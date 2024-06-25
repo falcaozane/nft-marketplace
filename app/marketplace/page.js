@@ -64,17 +64,37 @@ export default function Marketplace() {
     };
 
     fetchData();
-  }, [isConnected, signer]); // Added signer and getNFTitems as dependencies
+  }, [isConnected, signer]);
+
+  useEffect(() => {
+    if (!signer) return;
+
+    const contract = new ethers.Contract(
+      MarketplaceJson.address,
+      MarketplaceJson.abi,
+      signer
+    );
+
+    const handleNFTBought = (buyer, seller, tokenId, price) => {
+      setItems((prevItems) => prevItems.filter((item) => item.tokenId !== parseInt(tokenId)));
+    };
+
+    contract.on("NFTBought", handleNFTBought);
+
+    return () => {
+      contract.off("NFTBought", handleNFTBought);
+    };
+  }, [signer]);
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-r from-cyan-400 to-purple-500">
+    <div className="flex flex-col h-full bg-slate-400">
       <div className="flex flex-col items-center flex-grow">
         <div className="max-w-6xl w-full mx-auto p-4 flex-grow py-5">
           {isConnected ? (
             <>
               <div className="my-5 ">
-                <h2 className="text-4xl text-center text-white mb-7 uppercase">
-                  NFT Marketplace
+                <h2 className="text-4xl text-center font-bold text-white mb-7 uppercase">
+                  Market place
                 </h2>
                 {loading ? (
                   <div className="flex justify-center items-center h-screen">
@@ -87,7 +107,7 @@ export default function Marketplace() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-2xl font-bold text-gray-300 text-center my-4 h-screen">
+                  <div className="text-2xl font-bold text-gray-800 text-center my-4 h-screen">
                     No NFT Listed Now...
                   </div>
                 )}
