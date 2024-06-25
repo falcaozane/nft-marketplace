@@ -9,7 +9,6 @@ import GetIpfsUrlFromPinata from "@/utils/index";
 import Image from "next/image";
 import styles from "./nft.module.css";
 
-
 export default function NFTPage() {
   const params = useParams();
   const tokenId = params.tokenId;
@@ -27,11 +26,25 @@ export default function NFTPage() {
       signer
     );
     let tokenURI = await contract.tokenURI(tokenId);
-    console.log(tokenURI);
     const listedToken = await contract.getNFTListing(tokenId);
-    tokenURI = GetIpfsUrlFromPinata(tokenURI);
-    console.log(tokenURI);
-    const meta = (await axios.get(tokenURI)).data;
+
+    // Use the updated IPFS utility function to get the fallback URLs
+    const ipfsUrls = GetIpfsUrlFromPinata(tokenURI);
+
+    let meta;
+    for (const url of ipfsUrls) {
+      try {
+        meta = (await axios.get(url)).data;
+        break; // Exit loop if successful
+      } catch (error) {
+        console.error(`Error fetching metadata from ${url}:`, error);
+      }
+    }
+
+    if (!meta) {
+      throw new Error("Unable to fetch metadata from any IPFS gateway.");
+    }
+
     const item = {
       price: meta.price,
       tokenId,
