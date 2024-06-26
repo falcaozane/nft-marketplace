@@ -101,7 +101,7 @@ export default function NFTPage() {
         {isConnected ? (
           <div className="bg-gray-100 max-w-6xl w-full mx-auto shadow-lg rounded-lg p-4 overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="w-full md:w-1/2">
+              <div className="w-full ">
                 <Image src={item?.image} alt="" width={800} height={520} className="w-full h-auto rounded-lg" />
               </div>
               <div className="w-full md:w-1/2 flex flex-col justify-between p-4">
@@ -115,7 +115,7 @@ export default function NFTPage() {
                   <div className="text-xl font-bold text-orange-600">
                     <p>Price: {item?.price} ETH</p>
                   </div>
-                  <div className="text-xl font-bold text-orange-600">
+                  <div className=" text-sm md:text-xl font-bold text-orange-600">
                     <p>Seller: {item?.seller}</p>
                   </div>
                 </div>
@@ -136,7 +136,9 @@ export default function NFTPage() {
                       </button>
                     )
                   ) : (
-                    <div className="text-red-600 font-bold">This NFT was bought by: {item?.owner}</div>
+                    <div className="text-red-600 font-bold">
+                      <p className="text-sm md:text-xl">This NFT was bought by: {item?.owner}</p>
+                    </div>
                   )}
                 </div>
               </div>
