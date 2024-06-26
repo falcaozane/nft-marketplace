@@ -7,7 +7,6 @@ import { ethers } from "ethers";
 import axios from "axios";
 import GetIpfsUrlFromPinata from "@/utils/index";
 import Image from "next/image";
-import styles from "./nft.module.css";
 
 export default function NFTPage() {
   const params = useParams();
@@ -28,14 +27,13 @@ export default function NFTPage() {
     let tokenURI = await contract.tokenURI(tokenId);
     const listedToken = await contract.getNFTListing(tokenId);
 
-    // Use the updated IPFS utility function to get the fallback URLs
     const ipfsUrls = GetIpfsUrlFromPinata(tokenURI);
 
     let meta;
     for (const url of ipfsUrls) {
       try {
         meta = (await axios.get(url)).data;
-        break; // Exit loop if successful
+        break;
       } catch (error) {
         console.error(`Error fetching metadata from ${url}:`, error);
       }
@@ -53,6 +51,7 @@ export default function NFTPage() {
       image: meta.image,
       name: meta.name,
       description: meta.description,
+      isListed: listedToken.isListed,
     };
     return item;
   }
@@ -82,7 +81,7 @@ export default function NFTPage() {
       );
       const salePrice = ethers.parseUnits(item.price, "ether").toString();
       setBtnContent("Processing...");
-      setmsg("Buying the NFT... Please Wait (Upto 5 mins)");
+      setmsg("Buying the NFT... Please Wait (Up to 5 mins)");
       let transaction = await contract.executeSale(tokenId, {
         value: salePrice,
       });
@@ -101,50 +100,50 @@ export default function NFTPage() {
       <div className="flex flex-col items-center justify-center flex-grow">
         {isConnected ? (
           <div className="bg-gray-100 max-w-6xl w-full mx-auto shadow-lg rounded-lg p-4 overflow-hidden">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <Image src={item?.image} alt="" width={800} height={520} />
-              <div className="flex flex-col items-center justify-between p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="w-full md:w-1/2">
+                <Image src={item?.image} alt="" width={800} height={520} className="w-full h-auto rounded-lg" />
+              </div>
+              <div className="w-full md:w-1/2 flex flex-col justify-between p-4">
                 <div className="space-y-4">
                   <div className="text-xl font-bold text-orange-600">
-                    <span className="">Name:</span>
-                    <span className="">{item?.name}</span>
+                    <p>Name: {item?.name}</p>
                   </div>
                   <div className="text-xl text-gray-700">
-                    <span className="">Description:</span>
-                    <span className="">{item?.description}</span>
+                    <p>Description: {item?.description}</p>
                   </div>
                   <div className="text-xl font-bold text-orange-600">
-                    <span className="">Price:</span>
-                    <span className="">{item?.price} ETH</span>
+                    <p>Price: {item?.price} ETH</p>
                   </div>
                   <div className="text-xl font-bold text-orange-600">
-                    <span className="">Seller:</span>
-                    <span className="">{item?.seller}</span>
+                    <p>Seller: {item?.seller}</p>
                   </div>
                 </div>
                 <div className="mt-4 text-center">
                   <div className="text-red-600 text-lg">{msg}</div>
-                  {userAddress.toLowerCase() === item?.seller.toLowerCase() ? (
-                    <div className={styles.msgAlert}>You already Own!</div>
+                  {item?.isListed ? (
+                    userAddress.toLowerCase() === item?.seller.toLowerCase() ? (
+                      <div className="text-red-600 font-bold">You already own this NFT!</div>
+                    ) : (
+                      <button
+                        onClick={buyNFT}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                        {btnContent === "Processing..." && (
+                          <span className="spinner" />
+                        )}
+                        {btnContent}
+                      </button>
+                    )
                   ) : (
-                    <button
-                      onClick={() => {
-                        buyNFT();
-                      }}
-                      className={styles.Btn}
-                    >
-                      {btnContent === "Processing..." && (
-                        <span className={styles.spinner} />
-                      )}
-                      {btnContent}
-                    </button>
+                    <div className="text-red-600 font-bold">This NFT was bought by: {item?.owner}</div>
                   )}
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className={styles.notConnected}>You are not connected...</div>
+          <div className="text-white text-2xl">You are not connected...</div>
         )}
       </div>
     </div>
